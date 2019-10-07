@@ -8,6 +8,9 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Properties;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class WebProperties {
     private static HashMap<String, String> data = new HashMap<>();
     public String get(String name) throws IOException {
