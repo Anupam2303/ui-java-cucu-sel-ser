@@ -1,5 +1,4 @@
-package StepDefinitions;
-import Runner.GojekApplicationTest;
+package com.gojek.uiautomation.Base.StepDefinitions;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -10,14 +9,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.gojek.uiautomation.GojekApplication;
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @ContextConfiguration(
-        classes = {GojekApplicationTest.class}
+        classes = {GojekApplication.class}
 )
 @SpringBootTest(
-        classes = {GojekApplicationTest.class}
+        classes = {GojekApplication.class}
 )
 @RunWith(SpringJUnit4ClassRunner.class)
 public @interface BddStepDefinition {

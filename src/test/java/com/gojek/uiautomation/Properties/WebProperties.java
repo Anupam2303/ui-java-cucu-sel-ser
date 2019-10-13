@@ -1,4 +1,6 @@
-package Properties;
+package com.gojek.uiautomation.Base.Properties;
+
+import lombok.Data;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,11 +10,10 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Properties;
 
-import org.springframework.stereotype.Component;
-
-@Component
+@Data
 public class WebProperties {
     private static HashMap<String, String> data = new HashMap<>();
+
     public String get(String name) throws IOException {
         readFile();
         return data.get(name);

@@ -1,6 +1,5 @@
-package Data;
+package com.gojek.uiautomation.Base.Data;
 
-import Pages.MidTransHome;
 import net.thucydides.core.pages.PageObject;
 
 import java.util.concurrent.TimeUnit;
@@ -9,10 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
 public class Utils extends PageObject {
 
     public static void waitAWhile(int waitTime) {

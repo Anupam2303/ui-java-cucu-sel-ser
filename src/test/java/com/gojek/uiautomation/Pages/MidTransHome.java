@@ -1,18 +1,11 @@
-package Pages;
+package com.gojek.uiautomation.Base.Pages;
 
-import Data.Utils;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.pages.PageObject;
 
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.support.FindBy;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
 public class MidTransHome extends PageObject {
-
-    @Autowired Utils utils;
 
     @FindBy(xpath = "//*[@class=\"price\"]/span[2]")
     private WebElementFacade productPrice;
@@ -95,6 +88,15 @@ public class MidTransHome extends PageObject {
     @FindBy(xpath = "//span[contains(text(),'Invalid card number')]")
     private WebElementFacade invalidCradMessage;
 
+    @FindBy(xpath = "//div[@class='trans-status trans-success']")
+    private WebElementFacade purchaseSuccessMsg;
+
+    @FindBy(xpath = "//div[@class='text-success text-bold']")
+    private WebElementFacade transactionSuccessMsg;
+
+    @FindBy(xpath = "//button[@type='submit']")
+    private WebElementFacade otpOkBtn;
+
     public String get_ProductPrice() {
         return productPrice.getText();
     }
@@ -145,6 +147,13 @@ public class MidTransHome extends PageObject {
 
     public String get_invalidCardMessage() {
         return invalidCradMessage.getText();
+    }
+
+    public String get_transactionSuccess() {
+        return transactionSuccessMsg.getText();
+    }
+    public String get_PurchaseSuccess() {
+        return purchaseSuccessMsg.getText();
     }
 
     public void clickShippingTab() {
@@ -199,8 +208,10 @@ public class MidTransHome extends PageObject {
     public void enter_OTP(String otp){
         inputOTP.click();
         inputOTP.sendKeys(otp);
-//        Action moveToOTP = utils.performAction(inputOTP,otp);
-//        moveToOTP.perform();
+    }
+
+    public void clickOkOTPBtn(){
+        otpOkBtn.click();
     }
 
     public String getStyleImageActive() {

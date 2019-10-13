@@ -1,44 +1,40 @@
-package StepDefinitions;
+package com.gojek.uiautomation.Base.StepDefinitions;
 
-import com.gojek.uiautomation.Data.Utils;
-import static com.gojek.uiautomation.Data.Utils.waitAWhile;
-import com.gojek.uiautomation.Pages.MidTransHome;
-import com.gojek.uiautomation.Properties.WebProperties;
+import static com.gojek.uiautomation.Base.Data.Utils.waitAWhile;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import net.thucydides.core.steps.ScenarioSteps;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
+import com.gojek.uiautomation.Base.Data.Utils;
+import com.gojek.uiautomation.Base.Pages.MidTransHome;
+import com.gojek.uiautomation.Base.Properties.WebProperties;
+
 @BddStepDefinition
-public class MindTransCheckoutSteps {
+public class MindTransCheckoutSteps extends ScenarioSteps {
 
     private String itemImage = null;
 
     private WebProperties webProperties = new WebProperties();
 
-    @Autowired
     private MidTransHome midTransHome;
 
-    @Autowired
     private Utils utils;
 
     @Given("^gets midtrans demo url$")
-    public void getsMidtransDemoUrl() {
+    public void getsMidtransDemoUrl()throws IOException {
         String shopUrl = null;
-        try {
             shopUrl = webProperties.get("url");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         midTransHome.openUrl(shopUrl);
         waitAWhile(100);
     }
@@ -139,6 +135,7 @@ public class MindTransCheckoutSteps {
 
     @And("^user select creditcard as payment option$")
     public void userSelectCreditcardAsPaymentOption() {
+        utils.waitABit(300);
         midTransHome.clickCreditcardOption();
         utils.waitABit(100);
     }
@@ -163,18 +160,32 @@ public class MindTransCheckoutSteps {
     @And("^enters OTP '(.*)'$")
     public void entersOTP(String otp) {
         utils.waitABit(500);
-        midTransHome.switch_framemMidTransApp();
+        WebElement element = midTransHome.getDriver().findElement((By.tagName("iframe")));
+        midTransHome.getDriver().switchTo().frame(element);
         utils.waitABit(100);
         WebDriverWait wait=new WebDriverWait(midTransHome.getDriver(),20);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='PaRes']")));
         midTransHome.enter_OTP(otp);
         utils.waitABit(500);
+        midTransHome.clickOkOTPBtn();
     }
 
     @And("^clicks on paynow$")
     public void clicksOnPaynow() {
         utils.waitABit(100);
         midTransHome.clickPaynow();
+    }
+
+    @And("^verify success msg on homepage$") public void verifySuccessMsgOnHomepage() {
+        waitAWhile(500);
+        midTransHome.getDriver().switchTo().defaultContent();
+        assertThat("Purchase is not success",midTransHome.get_PurchaseSuccess().contains("Thank you for your purchase."),equalTo(true));
+    }
+
+    @Then("^verify transaction is successfull$") public void verifyTransactionIsSuccessfull() {
+        midTransHome.getDriver().switchTo().defaultContent();
+        midTransHome.switch_framemMidTransApp();
+        assertThat("Purchase is not success",midTransHome.get_transactionSuccess(),equalTo("Transaction successful"));
     }
 
     @Then("^verify error message '(.*)'$")
