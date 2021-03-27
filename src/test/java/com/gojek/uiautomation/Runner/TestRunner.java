@@ -1,15 +1,13 @@
-package com.gojek.uiautomation.Base.Runner;
+package com.gojek.uiautomation.Runner;
 
 import cucumber.api.CucumberOptions;
 import net.serenitybdd.cucumber.CucumberWithSerenity;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
 
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(features = "src/test/resources/feature",
-        tags = {""},
-        monochrome = true,
-        glue = {"com/gojek/uiautomation/Base/StepDefinitions"}
+        tags = {"@Test"},
+        glue = {"com/gojek/uiautomation/StepDefinitions"}
         )
 public class TestRunner {
 

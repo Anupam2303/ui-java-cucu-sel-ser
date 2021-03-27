@@ -1,4 +1,4 @@
-package com.gojek.uiautomation.Base.Pages;
+package com.gojek.uiautomation.Pages;
 
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.pages.PageObject;
@@ -83,7 +83,7 @@ public class MidTransHome extends PageObject {
     private WebElementFacade paynowBtn;
 
     @FindBy(xpath = "//input[@id='PaRes']")
-    public WebElementFacade inputOTP;
+    private WebElementFacade inputOTP;
 
     @FindBy(xpath = "//span[contains(text(),'Invalid card number')]")
     private WebElementFacade invalidCradMessage;

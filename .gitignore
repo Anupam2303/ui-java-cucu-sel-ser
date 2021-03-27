@@ -2,3 +2,6 @@
 /.idea/
 /Sernity_BDD.iml
 /target/
+/src/main/.DS_Store
+/.DS_Store
+.gitignore

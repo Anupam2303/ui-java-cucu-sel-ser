@@ -1,4 +1,4 @@
-package com.gojek.uiautomation.Base.StepDefinitions;
+package com.gojek.uiautomation.StepDefinitions;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;

@@ -15,7 +15,7 @@ It supports multiple Browsers update values in serenity properties file as:
 
 ## Running TestCases
 
-Its maven project so mvn us lifecycle
+Its maven project so use mvn lifecycle
 
 ```mvn clean verify```
 

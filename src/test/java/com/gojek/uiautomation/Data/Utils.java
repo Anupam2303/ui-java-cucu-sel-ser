@@ -1,4 +1,4 @@
-package com.gojek.uiautomation.Base.Data;
+package com.gojek.uiautomation.Data;
 
 import net.thucydides.core.pages.PageObject;
 

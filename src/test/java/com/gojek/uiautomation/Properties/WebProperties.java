@@ -1,4 +1,4 @@
-package com.gojek.uiautomation.Base.Properties;
+package com.gojek.uiautomation.Properties;
 
 import lombok.Data;
 

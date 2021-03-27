@@ -1,11 +1,9 @@
-package com.gojek.uiautomation.Base.StepDefinitions;
+package com.gojek.uiautomation.StepDefinitions;
 
-import static com.gojek.uiautomation.Base.Data.Utils.waitAWhile;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import net.thucydides.core.steps.ScenarioSteps;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -16,12 +14,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
 
-import com.gojek.uiautomation.Base.Data.Utils;
-import com.gojek.uiautomation.Base.Pages.MidTransHome;
-import com.gojek.uiautomation.Base.Properties.WebProperties;
+import com.gojek.uiautomation.Data.Utils;
+import com.gojek.uiautomation.Pages.MidTransHome;
+import com.gojek.uiautomation.Properties.WebProperties;
 
 @BddStepDefinition
-public class MindTransCheckoutSteps extends ScenarioSteps {
+public class MindTransCheckoutSteps {
 
     private String itemImage = null;
 
@@ -36,7 +34,6 @@ public class MindTransCheckoutSteps extends ScenarioSteps {
         String shopUrl = null;
             shopUrl = webProperties.get("url");
         midTransHome.openUrl(shopUrl);
-        waitAWhile(100);
     }
 
     @When("^user opens with midtrans demo shop on provided browser$")
@@ -114,7 +111,7 @@ public class MindTransCheckoutSteps extends ScenarioSteps {
     public void verifyProductNameAndPrice() throws IOException {
         utils.waitABit(100);
         midTransHome.switch_framemMidTransApp();
-        utils.waitABit(100);
+        utils.waitABit(1000);
         assertThat("Name doesnot matched", midTransHome.get_checkoutItem(),equalTo(webProperties.get("productName")));
         assertThat("Price doesnot matched", midTransHome.get_checkoutPrice(),equalTo(webProperties.get("productPrice")));
     }
@@ -135,7 +132,7 @@ public class MindTransCheckoutSteps extends ScenarioSteps {
 
     @And("^user select creditcard as payment option$")
     public void userSelectCreditcardAsPaymentOption() {
-        utils.waitABit(300);
+        utils.waitABit(500);
         midTransHome.clickCreditcardOption();
         utils.waitABit(100);
     }
@@ -163,8 +160,8 @@ public class MindTransCheckoutSteps extends ScenarioSteps {
         WebElement element = midTransHome.getDriver().findElement((By.tagName("iframe")));
         midTransHome.getDriver().switchTo().frame(element);
         utils.waitABit(100);
-        WebDriverWait wait=new WebDriverWait(midTransHome.getDriver(),20);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='PaRes']")));
+//        WebDriverWait wait=new WebDriverWait(midTransHome.getDriver(),20);
+//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@id='PaRes']")));
         midTransHome.enter_OTP(otp);
         utils.waitABit(500);
         midTransHome.clickOkOTPBtn();
@@ -177,14 +174,21 @@ public class MindTransCheckoutSteps extends ScenarioSteps {
     }
 
     @And("^verify success msg on homepage$") public void verifySuccessMsgOnHomepage() {
-        waitAWhile(500);
+//        utils.waitABit(500);
         midTransHome.getDriver().switchTo().defaultContent();
+        WebDriverWait wait=new WebDriverWait(midTransHome.getDriver(),20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='trans-status "
+                + "trans-success']/span")));
         assertThat("Purchase is not success",midTransHome.get_PurchaseSuccess().contains("Thank you for your purchase."),equalTo(true));
     }
 
     @Then("^verify transaction is successfull$") public void verifyTransactionIsSuccessfull() {
+        utils.waitABit(100);
         midTransHome.getDriver().switchTo().defaultContent();
         midTransHome.switch_framemMidTransApp();
+        WebDriverWait wait=new WebDriverWait(midTransHome.getDriver(),20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='text-success text-bold']")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='text-success text-bold']")));
         assertThat("Purchase is not success",midTransHome.get_transactionSuccess(),equalTo("Transaction successful"));
     }
 
